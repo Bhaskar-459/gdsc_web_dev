@@ -11,10 +11,16 @@ const { collection1, collection2 } = require('./mongodb');
 app.use(express.json())
 app.set('view engine','ejs')
 app.use(express.urlencoded({extended:false}))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/',(req,res)=>{
     res.render("login")
 })
+
+app.get('/images/:filename', (req, res) => {
+    const filename = req.params.filename;
+    res.sendFile(path.join(__dirname, 'public/images', filename));
+});
 
 //routing 
 app.get('/home', async (req, res) => {
